@@ -12,5 +12,22 @@
 //
 // Notes:
 // * Use a HashMap for the furniture store stock
+use std::collections::HashMap;
 
-fn main() {}
+fn main() {
+    let mut furniture = HashMap::new();
+    furniture.insert(String::from("chairs"), 5);
+    furniture.insert(String::from("beds"), 3);
+    furniture.insert(String::from("tables"), 2);
+    furniture.insert(String::from("couches"), 0);
+
+    let mut total = 0;
+    for (item, amt) in furniture.iter() {
+        match amt {
+            0 => println!("{} out of stock", item),
+            _ => println!("{}: {}", item, amt),
+        }
+        total += amt;
+    }
+    println!("{} total items", total);
+}

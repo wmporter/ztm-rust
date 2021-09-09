@@ -25,4 +25,13 @@ fn find_user(name: &str) -> Option<i32> {
     }
 }
 
-fn main() {}
+fn main() {
+    let username = "kevin";
+    let user = find_user(username).map(|id| User {
+        user_id: id, name: String::from(username)
+    });
+    match user {
+        None => println!("{} not found", username),
+        Some(u) => println!("{:?}", u),
+    }
+}
