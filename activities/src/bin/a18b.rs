@@ -21,5 +21,48 @@
 //   may enter the building
 // * Print whether the employee may access the building
 //   * Must use a function that utilizes the question mark operator to do this
+enum EmployeeCategory {
+    Maintenance,
+    Marketing,
+    Manager,
+    Supervisor,
+    Kitchen,
+    Technician,
+}
 
-fn main() {}
+struct Employee {
+    category: EmployeeCategory,
+    active: bool,
+}
+fn allowed_category(emp: &Employee) -> Result<(), String> {
+    match emp.category {
+        EmployeeCategory::Maintenance => Ok(()),
+        EmployeeCategory::Marketing => Ok(()),
+        EmployeeCategory::Manager => Ok(()),
+        _ => Err(String::from("wrong category")),
+    }
+}
+
+fn active_employee(emp: &Employee) -> Result<(), String> {
+    match emp.active {
+        true => Ok(()),
+        false => Err(String::from("terminated")),
+    }
+}
+fn can_enter(employee: &Employee) -> Result<(), String> {
+    allowed_category(&employee)?;
+    active_employee(&employee)?;
+    Ok(())
+}
+
+fn main() {
+    let kate = Employee {
+        category: EmployeeCategory::Kitchen,
+        active: false,
+    };
+
+    match can_enter(&kate) {
+        Ok(()) => println!("allowed"),
+        Err(msg) => println!("not allowed: {}", msg),
+    }
+}
