@@ -16,4 +16,19 @@
 //   * For the Ok variant, print any message you want
 //   * For the Err variant, print out the error message
 
-fn main() {}
+fn can_purchase(customer: &Customer) -> Result<(), String> {
+    if customer.age >= 21 {
+        return Ok(())
+    }
+    Err(String::from("Under 21"))
+}
+fn main() {
+    let kid = Customer {
+        age: 12,
+        name: String::from("Jeff")
+    };
+    match can_purchase(&kid) {
+        Ok(_) => println!("{} can buy", kid.name),
+        Err(msg) => println!("{} cannot buy: {}", kid.name, msg),
+    }
+}
