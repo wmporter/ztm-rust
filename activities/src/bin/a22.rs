@@ -32,3 +32,12 @@ fn concat(first: &str, second: &str) -> String {
 }
 
 fn main() {}
+
+[cfg(test)]
+mod test {
+
+    [test]
+    fn test_clamp_in_range() {
+        let expected =
+    }
+}
