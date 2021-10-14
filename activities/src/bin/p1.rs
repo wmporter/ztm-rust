@@ -28,5 +28,71 @@
 //   the functionality for that menu in isolation.
 // * A vector is the easiest way to store the bills at stage 1, but a
 //   hashmap will be easier to work with at stages 2 and 3.
+use std::io;
 
-fn main() {}
+struct Bill {
+    name: String,
+    amount: String,
+}
+
+fn bill_prompt(bills: &mut Vec<Bill>) {
+    let mut buf: String = String::new();
+    let mut name: String = String::new();
+    let mut amount: String = String::new();
+    
+    println!("Enter bill name: ");
+    let status = io::stdin().read_line(&mut buf);
+    if status.is_ok() {
+        name = buf.to_string();
+    }
+    println!("Enter amount: ");
+    io::stdin().read_line(&mut buf);
+    let status = io::stdin().read_line(&mut buf);
+    if status.is_ok() {
+        amount = buf.to_string();
+    }
+    let new_bill = Bill {
+        name: name,
+        amount: amount,
+    };
+    bills.push(new_bill);
+}
+
+fn show_bills(bills: &Vec<Bill>) {
+    for bill in bills {
+        println!("{:?}", bill.name);
+        println!("{:?}", bill.amount);
+    }
+}
+
+fn inp() -> Option<String> {
+    let mut buf = String::new();
+    while io::stdin().read_line(&mut buf).is_err() {
+        println!("Error. Please re-enter your input");
+    }
+    let input: String = buf.trim().to_owned();
+    if &input == "" {
+        None
+    }
+    else {
+        Some(input)
+    }
+}   
+
+fn main() {
+    let mut bills: Vec<Bill> = Vec::new();
+    let mut response: String = String::from("");
+
+    loop {
+        println!("Choices: ");
+        println!("1) Enter a bill");
+        println!("2) See existing bills");
+        println!("Enter choice: ");
+        let choice = inp().expect("bad input").as_str();
+        match choice {
+            "1" => bill_prompt(&mut bills),
+            "2" => show_bills(&bills),
+            _ => break,
+        }
+    }
+}
