@@ -12,42 +12,54 @@
 enum Color {
     Brown,
     White,
-    Yellow,
-}
-struct ShippingBox {
-    color: Color,
-    dimensions: (f64, f64),
-    weight: f64,
+    Green,
+    Black,
 }
 
-impl ShippingBox {
-    fn new_box(color: Color, dimensions: (f64, f64), weight: f64) -> Self {
-        Self {
-            color,
-            dimensions,
-            weight,
+impl Color {
+    fn display(&self) {
+        match self {
+            Color::Brown => println!("brown"),
+            Color::White => println!("white"),
+            Color::Green => println!("green"),
+            Color::Black => println!("black"),
         }
     }
-
-    fn display(&self) {
-        let color = match self.color {
-            Color::Brown => "brown",
-            Color::White => "white",
-            Color::Yellow => "yellow",
-        };
-        println!("color: {}", color);
-        println!("dimensions: ({}, {})", self.dimensions.0, self.dimensions.1);
-        println!("weight: {}", self.weight);
-    }
 }
 
+struct Dimension {
+    height: f64,
+    width: f64,
+    depth: f64,
+}
+
+struct ShippingBox {
+    dimensions: Dimension,
+    weight: f64,
+    color: Color,
+}
+
+impl Dimension {
+    fn display(&self) {
+        println!("h/w/d: {} / {} / {}", self.height, self.width, self.depth);
+    }
+}
+impl ShippingBox {
+    fn new_box() -> Self {
+        Self {
+            dimensions: Dimension { height: 20.0, width: 30.0, depth: 40.0 },
+            weight: 123.0,
+            color: Color::Brown,
+        }
+    }
+    
+    fn display(&self) {
+        self.dimensions.display();
+        println!("weight: {}", self.weight);
+        self.color.display();
+    }
+}
 fn main() {
-    let b = ShippingBox {
-        color: Color::Brown,
-        dimensions: (12.0, 15.0),
-        weight: 38.6,
-    };
-    b.display();
-    let new_box = ShippingBox::new_box(Color::White, (45.0, 50.0), 100.5);
-    new_box.display();
+    let ship = ShippingBox::new_box();
+    ship.display();
 }
