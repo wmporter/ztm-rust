@@ -11,32 +11,46 @@
 // * Use an if expression to determine which person's info should be printed
 // * The name and colors should be printed using a function
 
+enum Color {
+    Red,
+    White,
+    Blue,
+}
+
+impl Color {
+    fn display(&self) {
+        match self {
+            Color::Red => println!("red"),
+            Color::White => println!("white"),
+            Color::Blue => println!("blue")
+        }
+    }
+}
 struct Person {
     age: i32,
     name: String,
-    color: String,
+    fave: Color,
 }
 
 impl Person {
-    fn print_name(&self) {
-        println!("{}", self.name);
-    }
-
-    fn print_color(&self) {
-        println!("{}", self.color);
+    fn display(&self) {
+        println!("name: {}", self.name);
+        println!("age: {}", self.age);
+        print!("fave: ");
+        self.fave.display();
     }
 }
 
 fn main() {
     let people = vec![
-        Person { age: 3, name: "Hank".to_owned(), color: "brown".to_owned() },
-        Person { age: 24, name: String::from("Jill"), color: String::from("red") },
-        Person { age: 7, name: "Jeff".to_owned(), color: "gray".to_owned() },
+        Person { age: 10, name: "Bobby".to_owned(), fave: Color::Blue },
+        Person { age: 22, name: "Alice".to_owned(), fave: Color::Red },
+        Person { age: 46, name: "Pete".to_owned(), fave: Color::White }
     ];
+    
     for person in people {
-        if person.age <= 10 {
-            person.print_name();
-            person.print_color();
+        if person.name == "Alice" {
+            person.display();
         }
     }
 }
