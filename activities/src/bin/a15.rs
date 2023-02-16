@@ -18,17 +18,17 @@ enum Ticket {
 }
 
 fn main() {
-    let tickets = vec![
-        Ticket::Backstage(99.99, String::from("Steph")),
-        Ticket::Vip(250.00, String::from("Charlie")),
-        Ticket::Standard(35.00),
+    let tickets: Vec<Ticket> = vec![
+        Ticket::Backstage(64.64, "Dave".to_owned()),
+        Ticket::Vip(25.25, "Tom".to_owned()),
+        Ticket::Standard(30.30),
     ];
-
+    
     for ticket in tickets {
         match ticket {
-            Ticket::Backstage(price, name) => println!("name {:?} price {:?}", name, price),
-            Ticket::Vip(price, name) => println!("name {:?} price {:?}", name, price),
-            Ticket::Standard(price) => println!("price {:?}", price),
+            Ticket::Backstage(price, name) => println!("backstage ticket ${:?} for {}", price, name),
+            Ticket::Vip(price, name) => println!("vip ticket ${:?} for {}", price, name),
+            Ticket::Standard(price) => println!("standard ticket ${:?}", price),
         }
     }
 }
