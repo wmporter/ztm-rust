@@ -10,19 +10,21 @@
 
 struct Locker {
     name: String,
-    assignment: Option<i32>,
+    assign: Option<i32>,
+}
+
+impl Locker {
+    fn display(&self) {
+        match self.assign {
+            None => println!("{} has no locker", self.name),
+            Some(assign) => println!("{} has locker {}", self.name, assign),
+        }
+    }
 }
 
 fn main() {
-    let william = Locker {
-        name: String::from("William"),
-        assignment: Some(490),
-    };
-    let jenny = Locker {
-        name: String::from("Jenny"),
-        assignment: None,
-    };
-
-    println!("student {:?} locker {:?}", william.name, william.assignment);
-    println!("student {:?} locker {:?}", jenny.name, jenny.assignment);
+    let locker = Locker { name: "Bill".to_owned(), assign: None };
+    let locker2 = Locker { name: "Gary".to_owned(), assign: Some(46) };
+    locker.display();
+    locker2.display();
 }
