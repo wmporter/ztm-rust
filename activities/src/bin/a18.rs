@@ -16,19 +16,32 @@
 //   * For the Ok variant, print any message you want
 //   * For the Err variant, print out the error message
 
-fn can_purchase(customer: &Customer) -> Result<(), String> {
-    if customer.age >= 21 {
-        return Ok(())
+#[derive(Debug)]
+struct Adult {
+    name: String,
+    age: i32,
+}
+
+impl Adult {
+    fn new(name: &str, age: i32) -> Result<Self, String> {
+        if age >= 21 {
+            Ok(Self { name: name.to_owned(), age })
+        }
+        else {
+            Err("not an adult".to_owned())
+        }
     }
-    Err(String::from("Under 21"))
 }
 fn main() {
-    let kid = Customer {
-        age: 12,
-        name: String::from("Jeff")
-    };
-    match can_purchase(&kid) {
-        Ok(_) => println!("{} can buy", kid.name),
-        Err(msg) => println!("{} cannot buy: {}", kid.name, msg),
+    let people: Vec<Result<Adult, String>> = vec![
+        Adult::new("Bob", 42),
+        Adult::new("Carol", 18),
+    ];
+    
+    for person in people {
+        match person {
+            Ok(adult) => println!("{:?} is an adult", adult),
+            Err(msg) => println!("{}", msg),
+        }
     }
 }
